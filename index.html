@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Poop Clicker</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta charset="UTF-8">
+    <style>
+        #thapic{
+            transition: all .2s ease-in-out; 
+        }
+        .hovered{
+            transform: scale(1.1);
+        }
+        .pressed{
+            transform: scale(0.9);
+        }
+        p{
+            font-family: roboto, sans-serif;
+            font-size: 1.5em;
+            margin: 1px;
+            padding: 1px;
+        }
+        small{
+            position: relative;
+            top: -25px;
+            margin: 1px;
+            padding: 1px;
+        }
+        img{
+            position: relative;
+            padding: 1px;
+            top: -25px;
+            margin: 1px;
+        }
+        table{
+            position: relative;
+            top: -25px;
+        }
+        table,td{
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        #footer {
+    		position: fixed;
+    		bottom: 0;
+    		width: 100%;
+		}
+    </style>
+  </head>
+  <body>
+    <center>
+        <p id="score">Click the poop to begin</p><br>
+        <small id="pps"></small><br>
+        <img src="poop.png" id="thapic"><br>
+        <table>
+            <tr>
+            <td><b>Upgrade</b></td>
+            <td><b>Cost</b></td>
+            <td><b>Effect</b></td>
+            <td><b>Current</b></td>
+            <td><b>Buy<b></td>
+            </tr>
+            <tr>
+                <td>Cursor</td>
+                <td id="cursorcost">25</td>
+                <td>x2 ppc</td>
+                <td id="cursorcurr">1 ppc</td>
+                <td><button id="cursor" disabled>Buy</button></td>
+            </tr>
+            <tr>
+            	<td>Butt</td>
+            	<td id="buttcost">102</td>
+            	<td>+1 pps</td>
+            	<td id="buttcurr"></td>
+            	<td><button id="butt" disabled>Buy</button></td>
+            </tr>
+            <tr>
+            	<td>Public Toilet</td>
+            	<td id="toiletcost">315</td>
+            	<td>+3 pps</td>
+            	<td id="toiletcurr"></td>
+            	<td><button id="toilet" disabled>Buy</button></td>
+            </tr>
+            <tr>
+            	<td>Poop Condenser</td>
+            	<td id="condcost">2540</td>
+            	<td>+25 pps</td>
+            	<td id="condcurr"></td>
+            	<td><button id="cond" disabled>Buy</button></td>
+            </tr>
+            <tr>
+            	<td>Toilet Tardis</td>
+            	<td id="tardiscost">10500</td>
+            	<td>+100 pps</td>
+            	<td id="tardiscurr"></td>
+            	<td><button id="tardis" disabled>Buy</button></td>
+            </tr>
+            <tr>
+            	<td>Poop Facility</td>
+            	<td id="facilitycost">42050</td>
+            	<td>+402 pps</td>
+            	<td id="facilitycurr"></td>
+            	<td><button id="facility" disabled>Buy</button></td>
+            </tr>
+            <tr>
+            	<td>Nuclear P. Plant</td>
+            	<td id="nukecost">106700</td>
+            	<td>+1000 pps</td>
+            	<td id="nukecurr"></td>
+            	<td><button id="nuke" disabled>Buy</button></td>
+            </tr>
+        </table>
+        <button id="save">Save</button>
+        <button id="load">Load</button>
+        <button id="reset">Reset</button><br>
+        <small style="display: none; top: 0px" id="msg"></small>
+        <div id="footer">
+        	<small style="top: 0px;">Based on <a href="http://kararty.itch.io/poopclicker">KararTY's poopclicker</a> • Made by tonkku107 • Current version: 1.0 <a target="_blank" href="changelog.html">(Changelog)</a></small>
+        </div>
+    </center>
+  </body>
+</html>
