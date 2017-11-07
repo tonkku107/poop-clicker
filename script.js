@@ -5,6 +5,7 @@ $(document).ready(function(){
     $('#save').hide();
     $('#load').hide();
     $('#reset').hide();
+    $('#theme').hide();
 
     //Create required variables
     var clickedOnce = 0;
@@ -12,6 +13,7 @@ $(document).ready(function(){
     var ppc = 1;
     var pps = 0;
     var cursorCost = 25;
+    var light = false
 
     //upgrade method
     function upgrade(cost, gpps, multiplier, effect, upcostid, upcostcurr, upbutton){
@@ -115,6 +117,7 @@ $(document).ready(function(){
     //Save & Load functions
     save = function(){
         var saveObject = {
+            light: light,
             clickedOnce: clickedOnce,
             poop: poop,
             pps: pps,
@@ -154,6 +157,7 @@ $(document).ready(function(){
             var ret = localStorage.getItem('poopsave');
             var ret = atob(ret);
             var ret = JSON.parse(ret);
+            light = ret.light || false;
             clickedOnce = ret.clickedOnce || 0;
             poop = ret.poop || 0;
             pps = ret.pps || 0;
@@ -174,6 +178,7 @@ $(document).ready(function(){
             updatepoop();
             updatepps();
             updatetable();
+            theme();
             $('#msg').html('Loaded successfully!');
             $('#msg').css('color','');
             $('#msg').show();
@@ -187,6 +192,13 @@ $(document).ready(function(){
             location.reload();
         }
     }
+    theme = function(){
+        if (light) {
+            $("#themeLoader").html('<link rel="stylesheet" type="text/css" href="spice-light.css" />');
+        } else {
+            $("#themeLoader").html('<link rel="stylesheet" type="text/css" href="spice-dark.css" />');
+        }
+    }
     load();
 
     //Show everything if already played
@@ -198,6 +210,7 @@ $(document).ready(function(){
         $('#save').show();
         $('#load').show();
         $('#reset').show();
+        $('#theme').show();
         adding = setInterval(updateall, 1000);
         saving = setInterval(save, 180000);
     }else{
@@ -231,6 +244,7 @@ $(document).ready(function(){
             $('#save').show();
             $('#load').show();
             $('#reset').show();
+            $('#theme').show();
             clickedOnce = 1;
             adding = setInterval(updateall, 1000);
             saving = setInterval(save, 180000);
@@ -279,6 +293,7 @@ $(document).ready(function(){
     $('#save').click(function(){save()});
     $('#load').click(function(){load()});
     $('#reset').click(function(){reset();});
+    $('#theme').click(function(){light = !light; theme();});
     
     //running functions
     checking = setInterval(check, 1);
