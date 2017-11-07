@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css?family=Droid+Sans');
+
+* {
+	font-family: 'Droid Sans', sans-serif;
+}
+
+body {
+    margin-top: 2em;
+	background: #111;
+    color: #fff;
+}
+
+table, tr, td {
+	border: none;
+    border-collapse: separate;
+}
+
+td {
+	border-bottom: 1px solid #999;
+    padding: 1px 5px;
+}
+
+button {
+	padding: 0.5em 1em;
+    margin: 0.25em 0.5em;
+    border: none;
+    border-radius: 0.5em;
+    color: white;
+    background: #555;
+}
+
+button:hover {
+    background: #999;
+}
+
+button:active {
+	background: #555;
+}
+
+button:disabled {
+    background: #222;
+}
+
+a { color: #aaa; }
+
+#thapic {
+    padding: 1em;
+    padding-bottom: 0.75em;
+    padding-top: 1em;
+    -webkit-filter: drop-shadow(0 0 0.5em white);
+    filter: drop-shadow(0 0 0.5em white);
+}
+
+#thapic:hover {
+    -webkit-filter: drop-shadow(0 0 0 white);
+    filter: drop-shadow(0 0 0 black);
+}
+
+#footer {
+	margin-bottom: 2.5em;
+}
