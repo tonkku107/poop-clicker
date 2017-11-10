@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Droid+Sans');
+
 /* GRADIENT BY https://www.gradient-animator.com/ */
 body {
     background: linear-gradient(45deg, #3de5b8, #53f081);
@@ -31,10 +33,11 @@ body {
 }
 /* GRADIENT BY https://www.gradient-animator.com/ */
 
+* { font-family: 'Droid Sans', sans-serif; }
+
 #container {
-    display: inline-block;
     background: #ddd;
-    margin: 3em 0 3em 0;
+    margin: 3em auto 3em auto;
     outline: none;
     padding: 1.5em;
     color: #262626;
@@ -56,9 +59,27 @@ body {
     }
 }
 
-#container p {
+#container p, .containerP {
     background: #ffffff;
     padding: 0.5em;
     border-radius: 1px;
     box-shadow: 0 0 1px #262626;
 }
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+ul {
+    padding: 0;
+    margin-top: 0;
+}
+
+ul li {
+    display: inline-block;
+    list-style-type: none;
+}
+
+.inline { display: inline; }
+.right { float: right; }
