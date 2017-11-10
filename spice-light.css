@@ -47,12 +47,12 @@ a { color: #aaa; }
     padding: 1em;
     padding-bottom: 0.75em;
     padding-top: 1em;
-    -webkit-filter: drop-shadow(0 0 0.5em white);
-    filter: drop-shadow(0 0 0.5em white);
+    -webkit-filter: drop-shadow(0 0 0.4em black);
+    filter: drop-shadow(0 0 0.4em black);
 }
 
 #thapic:hover {
-    -webkit-filter: drop-shadow(0 0 0 white);
+    -webkit-filter: drop-shadow(0 0 0 black);
     filter: drop-shadow(0 0 0 black);
 }
 
