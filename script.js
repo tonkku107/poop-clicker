@@ -89,7 +89,7 @@ $(document).ready(function(){
         $('#pps').html("pps: " + pps);
     };
     var updatepoop = function(){
-        $('#score').html("Poop: " + poop);
+        $('#score').html("Poop: " + Math.round(poop));
     }
     var updatetable = function(){
         $('#cursorcost').html(cursorCost);
@@ -108,7 +108,7 @@ $(document).ready(function(){
         $('#nukecurr').html(nuke.pps +' pps');
     }
     var updateall = function(){
-        poop += pps;
+        poop += pps/10;
         updatepoop();
         updatepps();
         updatetable();
@@ -211,7 +211,7 @@ $(document).ready(function(){
         $('#load').show();
         $('#reset').show();
         $('#theme').show();
-        adding = setInterval(updateall, 1000);
+        adding = setInterval(updateall, 100);
         saving = setInterval(save, 180000);
     }else{
         //Initiate first time run
@@ -246,7 +246,7 @@ $(document).ready(function(){
             $('#reset').show();
             $('#theme').show();
             clickedOnce = 1;
-            adding = setInterval(updateall, 1000);
+            adding = setInterval(updateall, 100);
             saving = setInterval(save, 180000);
         }else{
             updatepoop();
