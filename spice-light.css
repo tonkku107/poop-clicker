@@ -26,19 +26,19 @@ button {
     border: none;
     border-radius: 0.5em;
     color: white;
-    background: #555;
+    background: #bfbfbf;
 }
 
 button:hover {
-    background: #999;
+    background: #acacac;
 }
 
 button:active {
-	background: #444;
+    background: #777777;
 }
 
 button:disabled {
-    background: #222;
+    background: #555555;
 }
 
 a { color: #aaa; }

@@ -13,7 +13,7 @@ $(document).ready(function(){
     var ppc = 1;
     var pps = 0;
     var cursorCost = 25;
-    var light = false
+    var dark = false
 
     //upgrade method
     function upgrade(cost, gpps, multiplier, effect, upcostid, upcostcurr, upbutton){
@@ -117,7 +117,7 @@ $(document).ready(function(){
     //Save & Load functions
     save = function(){
         var saveObject = {
-            light: light,
+            dark: dark,
             clickedOnce: clickedOnce,
             poop: poop,
             pps: pps,
@@ -157,7 +157,7 @@ $(document).ready(function(){
             var ret = localStorage.getItem('poopsave');
             var ret = atob(ret);
             var ret = JSON.parse(ret);
-            light = ret.light || false;
+            dark = ret.dark || false;
             clickedOnce = ret.clickedOnce || 0;
             poop = ret.poop || 0;
             pps = ret.pps || 0;
@@ -193,10 +193,10 @@ $(document).ready(function(){
         }
     }
     theme = function(){
-        if (light) {
-            $("#themeLoader").html('<link rel="stylesheet" type="text/css" href="spice-light.css" />');
-        } else {
+        if (dark) {
             $("#themeLoader").html('<link rel="stylesheet" type="text/css" href="spice-dark.css" />');
+        } else {
+            $("#themeLoader").html('<link rel="stylesheet" type="text/css" href="spice-light.css" />');
         }
     }
     load();
@@ -293,7 +293,7 @@ $(document).ready(function(){
     $('#save').click(function(){save()});
     $('#load').click(function(){load()});
     $('#reset').click(function(){reset();});
-    $('#theme').click(function(){light = !light; theme();});
+    $('#theme').click(function(){dark = !dark; theme();});
     
     //running functions
     checking = setInterval(check, 1);
