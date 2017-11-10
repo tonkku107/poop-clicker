@@ -1,0 +1,64 @@
+/* GRADIENT BY https://www.gradient-animator.com/ */
+body {
+    background: linear-gradient(45deg, #3de5b8, #53f081);
+    background-size: 600% 600%;
+
+    -webkit-animation: AnimationName 9s ease infinite;
+    -moz-animation: AnimationName 9s ease infinite;
+    -o-animation: AnimationName 9s ease infinite;
+    animation: AnimationName 9s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:78% 0%}
+    50%{background-position:23% 100%}
+    100%{background-position:78% 0%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:78% 0%}
+    50%{background-position:23% 100%}
+    100%{background-position:78% 0%}
+}
+@-o-keyframes AnimationName {
+    0%{background-position:78% 0%}
+    50%{background-position:23% 100%}
+    100%{background-position:78% 0%}
+}
+@keyframes AnimationName { 
+    0%{background-position:78% 0%}
+    50%{background-position:23% 100%}
+    100%{background-position:78% 0%}
+}
+/* GRADIENT BY https://www.gradient-animator.com/ */
+
+#container {
+    display: inline-block;
+    background: #ddd;
+    margin: 3em 0 3em 0;
+    outline: none;
+    padding: 1.5em;
+    color: #262626;
+    border-radius: 1px;
+    box-shadow: 0 0 1px #262626;
+}
+
+@media screen and (orientation:landscape) {
+    #container {
+        width: 40%;
+        font-size: 1em;
+    }
+}
+
+@media screen and (orientation:portrait) {
+    #container {
+        width: 80%;
+        font-size: 1.25em;
+    }
+}
+
+#container p {
+    background: #ffffff;
+    padding: 0.5em;
+    border-radius: 1px;
+    box-shadow: 0 0 1px #262626;
+}
