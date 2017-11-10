@@ -1,40 +1,48 @@
-#thapic{
-            transition: all .2s ease-in-out; 
-        }
-        .hovered{
-            transform: scale(1.1);
-        }
-        .pressed{
-            transform: scale(0.9);
-        }
-        p{
-            font-family: roboto, sans-serif;
-            font-size: 1.5em;
-            margin: 1px;
-            padding: 1px;
-        }
-        small{
-            position: relative;
-            top: -25px;
-            margin: 1px;
-            padding: 1px;
-        }
-        img{
-            position: relative;
-            padding: 1px;
-            top: -25px;
-            margin: 1px;
-        }
-        table{
-            position: relative;
-            top: -25px;
-        }
-        table,td{
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-        #footer {
-    		position: fixed;
-    		bottom: 0;
-    		width: 100%;
-	}
+#thapic {
+    transition: all .2s ease-in-out; 
+}
+
+.hovered {
+    transform: scale(1.1);
+}
+
+.pressed {
+    transform: scale(0.9);
+}
+
+p {
+    font-family: roboto, sans-serif;
+    font-size: 1.5em;
+    margin: 1px;
+    padding: 1px;
+}
+
+small {
+    position: relative;
+    top: -25px;
+    margin: 1px;
+    padding: 1px;
+}
+
+img {
+    position: relative;
+    padding: 1px;
+    top: -25px;
+    margin: 1px;
+}
+
+table {
+    position: relative;
+    top: -25px;
+}
+
+table,td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
