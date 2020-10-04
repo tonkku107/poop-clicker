@@ -23,6 +23,8 @@ $(document).ready(() => {
   const poopImage = new Image()
   poopImage.src = 'poop.png'
 
+  const canvas = $('#rainCanvas').get(0);
+
   // upgrade method
   class Upgrade {
     constructor(cost, gpps, multiplier, effect, upcostid, upcostcurr, upbutton) {
@@ -175,7 +177,7 @@ $(document).ready(() => {
     if (localStorage.getItem('poopsave') !== null) {
       const ret = JSON.parse(atob(localStorage.getItem('poopsave')));
       dark = ret.dark || false;
-      rain = ret.rain || true;
+      rain = ret.rain || false;
       clickedOnce = ret.clickedOnce || 0;
       poop = ret.poop || 0;
       pps = ret.pps || 0;
@@ -221,15 +223,18 @@ $(document).ready(() => {
     }
   };
 
+  const resizeCanvas = () => {
+    canvas.height = document.body.scrollHeight;
+    canvas.width = document.body.clientWidth;
+    canvas.style.height = `${document.body.scrollHeight}px`;
+    canvas.style.width = `${document.body.clientWidth}px`;
+  }
+
   const makeItRain = () => {
     if (rain) {
       $('#rainCanvas').show();
 
-      const canvas = $('#rainCanvas').get(0);
-
-      canvas.height = window.innerHeight;
-      canvas.width = 1920;
-      canvas.style.width = '100%';
+      resizeCanvas();
 
       const ctx = canvas.getContext('2d');
 
@@ -245,8 +250,10 @@ $(document).ready(() => {
         }
 
         for (let index = 0; index < particles.length; index++) {
-          if (particles[index] == null) {
-            particles[index] = {
+          let particle = particles[index];
+
+          if (!particle) {
+            particle = {
               x: Math.random() * canvas.width,
               y: 0,
               speed: Math.random() * (2 - 1) + 1,
@@ -254,33 +261,36 @@ $(document).ready(() => {
               transparency: Math.random() * (0.7 - 0.2) + 0.2
             };
             // To make sure sprite spawns above the visible canvas.
-            particles[index].y -= poopImage.height * particles[index].size;
+            particle.y -= poopImage.height * particle.size;
           } else {
-            particles[index].y += particles[index].speed;
+            particle.y += particle.speed;
           }
 
+          // Add particle changes to the particle cache.
+          particles[index] = particle;
+
           // Make sure the next drawn object has the alpha set.
-          ctx.globalAlpha = particles[index].transparency;
+          ctx.globalAlpha = particle.transparency;
 
           // Add glow if dark mode is true.
           if (dark) {
             ctx.shadowBlur = 7;
             ctx.shadowOffsetX = 0;
             ctx.shadowOffsetY = 0;
-            ctx.shadowColor = `rgba(255, 255, 255, ${particles[index].transparency})`;
+            ctx.shadowColor = `rgba(255, 255, 255, ${particle.transparency})`;
           } else {
             ctx.shadowBlur = 0;
           }
 
           ctx.drawImage(
             poopImage,
-            particles[index].x,
-            particles[index].y,
-            poopImage.width * particles[index].size,
-            poopImage.height * particles[index].size
+            particle.x,
+            particle.y,
+            poopImage.width * particle.size,
+            poopImage.height * particle.size
           );
 
-          if (particles[index].y > canvas.height) {
+          if (particle.y > canvas.height) {
             particles[index] = null;
 
             // Spawn or remove particles based on poop count.
@@ -291,14 +301,14 @@ $(document).ready(() => {
             }
           }
         }
-      });
+      }, 1);
     } else {
       clearInterval(rainInterval);
       $('#rainCanvas').hide();
     }
   };
 
-  const showButtons = () => {
+  const showElements = () => {
     $('body').show();
     $('table').show();
     $('#pps').html(`pps: ${pps}`);
@@ -308,13 +318,14 @@ $(document).ready(() => {
     $('#reset').show();
     $('#theme').show();
     $('#rain').show();
+    makeItRain();
   };
 
   load();
 
   // Show everything if already played
   if (clickedOnce === 1) {
-    showButtons();
+    showElements();
     setInterval(updateall, 1000);
     setInterval(save, 180000);
   } else {
@@ -334,7 +345,7 @@ $(document).ready(() => {
     poop += ppc;
     if (poop === 1) {
       updatepoop();
-      showButtons();
+      showElements();
       clickedOnce = 1;
       setInterval(updateall, 1000);
       setInterval(save, 180000);
@@ -389,6 +400,8 @@ $(document).ready(() => {
     rain = !rain;
     makeItRain();
   });
+
+  $(window).resize(() => resizeCanvas());
 
   // running functions
   setInterval(check, 1);
