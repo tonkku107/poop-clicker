@@ -177,7 +177,7 @@ $(document).ready(() => {
     if (localStorage.getItem('poopsave') !== null) {
       const ret = JSON.parse(atob(localStorage.getItem('poopsave')));
       dark = ret.dark || false;
-      rain = ret.rain || false;
+      rain = typeof ret.rain === 'boolean' ? ret.rain : true;
       clickedOnce = ret.clickedOnce || 0;
       poop = ret.poop || 0;
       pps = ret.pps || 0;
