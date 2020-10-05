@@ -18,10 +18,10 @@ $(document).ready(() => {
   let rain = true;
 
   let rainLoopId;
-  let particles = [null];
-  let maxParticles = 50;
-  const poopImage = new Image()
-  poopImage.src = 'poop.png'
+  let maxParticles = 100;
+  let particles = new Array(maxParticles).fill(null);
+  const poopImage = new Image();
+  poopImage.src = 'poop.png';
 
   const canvas = $('#rainCanvas').get(0);
   const ctx = canvas.getContext('2d');
@@ -231,21 +231,14 @@ $(document).ready(() => {
     canvas.style.width = `${document.body.clientWidth}px`;
   }
 
-  const rainLoop = (timestamp) => {
+  const rainLoop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    /**
-     * If all particles are removed, but poop is more than 1,
-     * allow particles to refresh by adding 1 particle.
-     */
-    if (particles.length === 0 && poop > 0) {
-      particles = [null];
-    }
 
     for (let index = 0; index < particles.length; index++) {
       let particle = particles[index];
 
-      if (!particle) {
+      const particlesAlive = particles.filter(particle => particle);
+      if (!particle && poop > particlesAlive.length) {
         particle = {
           x: Math.random() * canvas.width,
           y: 0,
@@ -255,9 +248,14 @@ $(document).ready(() => {
         };
         // To make sure sprite spawns above the visible canvas.
         particle.y -= poopImage.height * particle.size;
-      } else {
-        particle.y += particle.speed;
       }
+
+      // If this particle doesn't exist, skip it.
+      if (!particle) {
+        continue;
+      }
+
+      particle.y += particle.speed;
 
       // Add particle changes to the particle cache.
       particles[index] = particle;
@@ -285,13 +283,6 @@ $(document).ready(() => {
 
       if (particle.y > canvas.height) {
         particles[index] = null;
-
-        // Spawn or remove particles based on poop count.
-        if (particles.length > poop) {
-          particles.splice(index, 1);
-        } else if (poop > particles.length && particles.length <= maxParticles) {
-          particles.push(null);
-        }
       }
     }
 
