@@ -38,3 +38,27 @@
     		bottom: 0;
     		width: 100%;
 	}
+
+canvas#rainCanvas {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+center {
+  padding-top: 2em;
+}

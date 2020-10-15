@@ -6,6 +6,7 @@ $(document).ready(() => {
   $('#load').hide();
   $('#reset').hide();
   $('#theme').hide();
+  $('#rain').hide();
 
   // Create required variables
   let clickedOnce = 0;
@@ -14,6 +15,16 @@ $(document).ready(() => {
   let pps = 0;
   let cursorCost = 25;
   let dark = false;
+  let rain = true;
+
+  let rainLoopId;
+  let maxParticles = 100;
+  let particles = new Array(maxParticles).fill(null);
+  const poopImage = new Image();
+  poopImage.src = 'poop.png';
+
+  const canvas = $('#rainCanvas').get(0);
+  const ctx = canvas.getContext('2d');
 
   // upgrade method
   class Upgrade {
@@ -128,6 +139,7 @@ $(document).ready(() => {
   const save = () => {
     const saveObject = {
       dark: dark,
+      rain: rain,
       clickedOnce: clickedOnce,
       poop: poop,
       pps: pps,
@@ -166,6 +178,7 @@ $(document).ready(() => {
     if (localStorage.getItem('poopsave') !== null) {
       const ret = JSON.parse(atob(localStorage.getItem('poopsave')));
       dark = ret.dark || false;
+      rain = typeof ret.rain === 'boolean' ? ret.rain : true;
       clickedOnce = ret.clickedOnce || 0;
       poop = ret.poop || 0;
       pps = ret.pps || 0;
@@ -187,6 +200,7 @@ $(document).ready(() => {
       updatepps();
       updatetable();
       theme();
+      makeItRain();
       $('#msg').html('Loaded successfully!');
       $('#msg').css('color', '');
       $('#msg').show();
@@ -210,10 +224,83 @@ $(document).ready(() => {
     }
   };
 
-  load();
+  const resizeCanvas = () => {
+    canvas.height = document.body.scrollHeight;
+    canvas.width = document.body.clientWidth;
+    canvas.style.height = `${document.body.scrollHeight}px`;
+    canvas.style.width = `${document.body.clientWidth}px`;
+  }
 
-  // Show everything if already played
-  if (clickedOnce === 1) {
+  const rainLoop = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let index = 0; index < particles.length; index++) {
+      let particle = particles[index];
+
+      const particlesAlive = particles.filter(particle => particle);
+      if (!particle && poop > particlesAlive.length) {
+        particle = {
+          x: Math.random() * canvas.width,
+          y: 0,
+          speed: Math.random() * (2 - 1) + 1,
+          size: Math.random() * (0.7 - 0.2) + 0.2,
+          transparency: Math.random() * (0.7 - 0.2) + 0.2
+        };
+        // To make sure sprite spawns above the visible canvas.
+        particle.y -= poopImage.height * particle.size;
+      }
+
+      // If this particle doesn't exist, skip it.
+      if (!particle) {
+        continue;
+      }
+
+      particle.y += particle.speed;
+
+      // Add particle changes to the particle cache.
+      particles[index] = particle;
+
+      // Make sure the next drawn object has the alpha set.
+      ctx.globalAlpha = particle.transparency;
+
+      // Add glow if dark mode is true.
+      if (dark) {
+        ctx.shadowBlur = 7;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.shadowColor = `rgba(255, 255, 255, ${particle.transparency})`;
+      } else {
+        ctx.shadowBlur = 0;
+      }
+
+      ctx.drawImage(
+        poopImage,
+        particle.x,
+        particle.y,
+        poopImage.width * particle.size,
+        poopImage.height * particle.size
+      );
+
+      if (particle.y > canvas.height) {
+        particles[index] = null;
+      }
+    }
+
+    rainLoopId = window.requestAnimationFrame(rainLoop)
+  }
+
+  const makeItRain = () => {
+    if (rain) {
+      $('#rainCanvas').show();
+      resizeCanvas();
+      rainLoopId = window.requestAnimationFrame(rainLoop);
+    } else {
+      window.cancelAnimationFrame(rainLoopId);
+      $('#rainCanvas').hide();
+    }
+  };
+
+  const showElements = () => {
     $('body').show();
     $('table').show();
     $('#pps').html(`pps: ${pps}`);
@@ -222,6 +309,15 @@ $(document).ready(() => {
     $('#load').show();
     $('#reset').show();
     $('#theme').show();
+    $('#rain').show();
+    makeItRain();
+  };
+
+  load();
+
+  // Show everything if already played
+  if (clickedOnce === 1) {
+    showElements();
     setInterval(updateall, 1000);
     setInterval(save, 180000);
   } else {
@@ -241,13 +337,7 @@ $(document).ready(() => {
     poop += ppc;
     if (poop === 1) {
       updatepoop();
-      $('table').show();
-      $('#pps').html(`pps: ${pps}`);
-      $('#pps').show();
-      $('#save').show();
-      $('#load').show();
-      $('#reset').show();
-      $('#theme').show();
+      showElements();
       clickedOnce = 1;
       setInterval(updateall, 1000);
       setInterval(save, 180000);
@@ -298,6 +388,12 @@ $(document).ready(() => {
     dark = !dark;
     theme();
   });
+  $('#rain').click(() => {
+    rain = !rain;
+    makeItRain();
+  });
+
+  $(window).resize(() => resizeCanvas());
 
   // running functions
   setInterval(check, 1);
